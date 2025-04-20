@@ -1,0 +1,18 @@
+﻿@model EventManagementSystem.Models.Event
+
+@{
+    ViewData["Title"] = "报名 - " + Model.Title;
+}
+
+<h1>报名确认</h1>
+
+<h3>您要报名的活动: @Model.Title</h3>
+<p>开始时间: @Model.StartTime</p>
+<p>地点: @Model.Location</p>
+<p>当前报名人数: @Model.Registrations?.Count / @Model.MaxParticipants</p>
+
+<form asp-action="ConfirmRegister">
+    <input type="hidden" name="eventId" value="@Model.Id" />
+    <input type="submit" value="确认报名" class="btn btn-primary" />
+    <a asp-controller="Events" asp-action="Details" asp-route-id="@Model.Id" class="btn btn-secondary">取消</a>
+</form>

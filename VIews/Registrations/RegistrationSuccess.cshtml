@@ -1,0 +1,18 @@
+﻿@model EventManagementSystem.Models.Event
+
+@{
+    ViewData["Title"] = "报名成功";
+}
+
+<h1>报名成功!</h1>
+
+<div class="alert alert-success">
+    <h4>您已成功报名活动: @Model.Title</h4>
+    <p>开始时间: @Model.StartTime</p>
+    <p>地点: @Model.Location</p>
+</div>
+
+<div>
+    <a asp-controller="Events" asp-action="Details" asp-route-id="@Model.Id" class="btn btn-primary">查看活动详情</a>
+    <a asp-controller="Events" asp-action="Index" class="btn btn-secondary">浏览更多活动</a>
+</div>

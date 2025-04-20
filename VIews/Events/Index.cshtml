@@ -1,0 +1,51 @@
+@model IEnumerable<EventManagementSystem.Models.Event>
+
+@{
+    ViewData["Title"] = "活动列表";
+}
+
+<h1>活动列表</h1>
+
+@if (User.IsInRole("Organizer"))
+{
+    <p>
+        <a asp-action="Create" class="btn btn-primary">发布新活动</a>
+        <a asp-action="MyEvents" class="btn btn-secondary">我发布的活动</a>
+    </p>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>活动名称</th>
+            <th>开始时间</th>
+            <th>结束时间</th>
+            <th>地点</th>
+            <th>发布者</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                <td>@Html.DisplayFor(modelItem => item.StartTime)</td>
+                <td>@Html.DisplayFor(modelItem => item.EndTime)</td>
+                <td>@Html.DisplayFor(modelItem => item.Location)</td>
+                <td>@Html.DisplayFor(modelItem => item.Organizer.FullName)</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">详情</a>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a asp-controller="Registrations" asp-action="Register" asp-route-eventId="@item.Id" class="btn btn-success">报名</a>
+                    }
+                    else
+                    {
+                        <a asp-area="Identity" asp-page="/Account/Login" class="btn btn-success">登录后报名</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

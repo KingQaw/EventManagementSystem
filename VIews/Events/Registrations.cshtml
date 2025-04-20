@@ -1,0 +1,35 @@
+﻿@model EventManagementSystem.Models.Event
+
+@{
+    ViewData["Title"] = "报名情况 - " + Model.Title;
+}
+
+<h1>报名情况 - @Model.Title</h1>
+
+<p>
+    已报名人数: @Model.Registrations.Count / @Model.MaxParticipants
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>姓名</th>
+            <th>邮箱</th>
+            <th>报名时间</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Registrations)
+        {
+            <tr>
+                <td>@item.Attendee.FullName</td>
+                <td>@item.Attendee.Email</td>
+                <td>@item.RegistrationDate</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div>
+    <a asp-action="MyEvents" class="btn btn-secondary">返回我的活动</a>
+</div>

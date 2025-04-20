@@ -1,0 +1,46 @@
+﻿@model EventManagementSystem.Models.Event
+@using System.Security.Claims
+
+@{
+    ViewData["Title"] = "活动详情";
+}
+
+<h1>@Model.Title</h1>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">描述</dt>
+        <dd class="col-sm-10">@Model.Description</dd>
+
+        <dt class="col-sm-2">开始时间</dt>
+        <dd class="col-sm-10">@Model.StartTime</dd>
+
+        <dt class="col-sm-2">结束时间</dt>
+        <dd class="col-sm-10">@Model.EndTime</dd>
+
+        <dt class="col-sm-2">地点</dt>
+        <dd class="col-sm-10">@Model.Location</dd>
+
+        <dt class="col-sm-2">最大参与人数</dt>
+        <dd class="col-sm-10">@Model.MaxParticipants</dd>
+
+        <dt class="col-sm-2">发布者</dt>
+        <dd class="col-sm-10">@Model.Organizer.FullName</dd>
+    </dl>
+</div>
+<div>
+    @if (User.IsInRole("Organizer") && User.FindFirstValue(ClaimTypes.NameIdentifier) == Model.OrganizerId)
+    {
+        <a asp-action="Registrations" asp-route-id="@Model.Id" class="btn btn-primary">查看报名情况</a>
+    }
+    @if (User.Identity.IsAuthenticated)
+    {
+        <a asp-controller="Registrations" asp-action="Register" asp-route-eventId="@Model.Id" class="btn btn-success">报名</a>
+    }
+    else
+    {
+        <a asp-area="Identity" asp-page="/Account/Login" class="btn btn-success">登录后报名</a>
+    }
+    <a asp-action="Index" class="btn btn-secondary">返回列表</a>
+</div>
